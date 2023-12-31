@@ -1,0 +1,19 @@
+---
+- name: "Updating apt repo"
+  apt: update_cache=yes force_apt_get=yes cache_valid_time=36000
+  become: true
+  become_method: sudo
+
+- name: "Upgrade all packages"
+  apt: state=latest force_apt_get=yes
+  become: true
+  become_method: sudo
+  
+- name: "Installing Packages"
+  package:
+    name:
+      - jq
+      - net-tools  
+    state: latest
+  become: true
+  become_method: sudo
