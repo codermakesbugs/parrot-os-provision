@@ -1,0 +1,25 @@
+---
+- name: "Install zsh"
+  apt:
+    name: zsh
+    state: present
+  become: true
+  become_method: sudo
+
+- name: "Install Oh-my-zsh"    
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+- name: "Install zsh-autosuggestions"
+  shell: git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions 
+
+- name: "Install fonts for terminal"
+  apt:
+    name: fonts-powerline
+    state: present
+  become: true
+  become_method: sudo
+
+- name: "Copy .zshrc"
+  copy:
+    src: "{{ role_path }}/files/.zshrc"
+    dest: "{{ ansible_env.HOME }}"
